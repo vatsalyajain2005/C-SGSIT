@@ -1,8 +1,13 @@
+/* Write a C program to read N elements into an array and calculate:
+(i) Sum of all the elements.
+(ii) Average of all the elements.*/ 
+
 #include<stdio.h>
 
 int main(){
     
     int n, sum=0, avg;
+    printf("Enter no. of values: ");
     scanf("%d",&n);
     int arr[n];
     

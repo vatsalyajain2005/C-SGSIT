@@ -1,3 +1,7 @@
+/* Write a C program to read N elements into an array and Find:
+(i) Largest element of the array.
+(ii) Smallest element of the array. */
+
 #include<stdio.h>
 
 int main(){
@@ -11,7 +15,7 @@ int main(){
         printf("Enter the value of arr[%d]: ", i+1);
         scanf("%d",&arr[i]);  
     }
-    int min, max = 0;
+    int min = arr[0], max = arr[0];  
     for(int i=0; i<=n-1; i++){
         if (min>arr[i]){
             min = arr[i];

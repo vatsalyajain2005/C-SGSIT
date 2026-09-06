@@ -1,3 +1,9 @@
+// Write a C program to implement an Array of size 10 and perform following
+// operations:
+// (i) Insert elements in the array.
+// (ii) Display elements of the array.
+// (iii) Display number of elements present in the array. 
+
 #include<stdio.h>
 
 int main(){

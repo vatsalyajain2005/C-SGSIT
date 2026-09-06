@@ -1,7 +1,8 @@
+/*Write a C program to insert an element at a specified position in a onedimensional array.*/
 #include<stdio.h>
 
 int main(){
-int n;
+int n,a; 
     printf("Enter no. of values: ");
     scanf("%d",&n);
     int arr[n];
@@ -11,7 +12,8 @@ int n;
         scanf("%d",&arr[i]);
         
     }
-
-    printf("%d", arr[2]);
+    printf("Enter the position of the array you want to Print: ");
+    scanf("%d",&a);
+    printf("Array %d element is: %d", a,arr[a-1]);
     
 }
