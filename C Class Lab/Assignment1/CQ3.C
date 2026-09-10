@@ -1,5 +1,4 @@
 # include <stdio.h>
-// Smallest of two numbers in ternary operator
 int main(){
     int a,b;
     printf("Enter A and B: ");

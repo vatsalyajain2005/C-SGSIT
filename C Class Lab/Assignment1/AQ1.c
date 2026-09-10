@@ -1,3 +1,4 @@
+// Write a C program to input two numbers and print their sum, difference, product, quotient, and remainder.
 # include <stdio.h>
 int main(){
     int a, b;

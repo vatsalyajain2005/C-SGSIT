@@ -1,5 +1,4 @@
 # include <stdio.h>
-// Eligible for voting or not
 int main(){
     int age;
     printf("Enter Age: ");

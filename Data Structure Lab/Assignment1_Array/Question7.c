@@ -15,11 +15,11 @@ int main(){
     for (int i=0; i<=student-1; i++){
         printf("Enter the Rollno. of student %d: ",i+1);
         scanf("%d",&rollno[i]);
-        printf("\n");
-
+        
         for (int j=0; j<class; j++){
             printf("Enter the attendence of Student %d for classes %d (1.Present or 0.Absent): ", i+1, j+1);
             scanf("%d", &arr[i][j]);
+            printf("\n");
         }
     }
     printf("----Attendence----\n");

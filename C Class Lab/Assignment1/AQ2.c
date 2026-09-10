@@ -9,6 +9,4 @@ int main(){
     printf("\n Parameter is: %d", 2*(len+bre) );
     
     return 0;
-
-
 }
