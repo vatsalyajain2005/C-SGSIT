@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define MAX 5
+#define MAX 100
 
 int stack[MAX];
 int top = -1;
@@ -64,7 +64,7 @@ void count() {
 int main() {
     int choice;
 
-    while (1) {
+    while (choice != 6) {
         printf("\n===== STACK MENU =====\n");
         printf("1. Push\n");
         printf("2. Pop\n");

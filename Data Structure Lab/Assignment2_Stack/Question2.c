@@ -1,22 +1,39 @@
-# include <stdio.h>
-int main()
-{
-    char str[5], stack[5];
-    int top = -1, i, j;
+/*Write a C program that uses a stack to determine whether the parentheses in
+a given arithmetic expression are balanced. The program should display
+whether the expression is balanced or not balanced.
+*/
 
-    printf("Enter a string: ");
-    scanf("%s", str);
+#include <stdio.h>
 
-    for(i = 0; str[i] != '\0'; i++)
-    {
-        stack[++top] = str[i];
+#define MAX 100
+
+int main() {
+    char exp[MAX];
+    char stack[MAX];
+    int top = -1;
+    int balanced = 1;
+
+    printf("Enter an arithmetic expression: ");
+    scanf("%s", exp);
+
+    for (int i = 0; exp[i] != '\0'; i++) {
+        if (exp[i] == '(') {
+            top++;
+            stack[top] = '(';
+        }
+        else if (exp[i] == ')') {
+            top--;
+        }
     }
 
-    printf("The reversed string is: ");
+    if (top != -1) {
+        balanced = 0;
+    }
 
-    for(j = top; j >= 0; j--)
-    {
-        printf("%c", stack[j]);
+    if (balanced == 1) {
+        printf("Expression is Balanced.\n");
+    } else {
+        printf("Expression is Not Balanced.\n");
     }
 
     return 0;
