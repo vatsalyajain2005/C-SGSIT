@@ -1,0 +1,33 @@
+/* Write a C program to read N elements into an array and Find:
+(i) Largest element of the array.
+(ii) Smallest element of the array. */
+
+#include<stdio.h>
+
+int main(){
+    
+    int n;
+    printf("Enter no. of values: ");
+    scanf("%d",&n);
+    int arr[n];
+    
+    for(int i=0; i<=n-1; i++){
+        printf("Enter the value of arr[%d]: ", i+1);
+        scanf("%d",&arr[i]);  
+    }
+    int min = arr[0], max = arr[0];  
+    for(int i=0; i<=n-1; i++){
+        if (min>arr[i]){
+            min = arr[i];
+        }
+    }
+    for(int i=0; i<=n-1; i++){
+        if (max < arr[i]){
+            max = arr[i];
+        }
+    }
+
+    printf("Minimun Value is: %d\n", min);
+    printf("Maximun Value is: %d", max);
+    return 0;
+}
