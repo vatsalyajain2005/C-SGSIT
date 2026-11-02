@@ -9,7 +9,7 @@ struct Node {
 struct Node *head = NULL;
 
 void insertEnd() {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *newNode = malloc(sizeof(struct Node));
     if (newNode == NULL) {
         printf("Memory overflow!\n");
         return;
