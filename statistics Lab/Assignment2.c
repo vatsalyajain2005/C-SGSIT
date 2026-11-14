@@ -1,97 +1,99 @@
 // Assignment 2 - Write a program to calculate mean, median, and mode in a Discrete series.
 #include <stdio.h>
-int main(){
 
-    // Taking input for number of elements in the array
+int main() {
     int n;
     printf("Enter the number of elements in the array: ");
-    scanf("%d",&n);
+    scanf("%d", &n);
 
-    float x[n],f[n];
-    // Value input for X and F
-    for (int i=0; i<=n-1; i++){
-        printf("Enter the value of X[%d]: ", i + 1);
+    float x[n];
+    int f[n], cf[n];
+    float fx[n];
+
+    printf("Enter the values of X: ");
+    for (int i = 0; i < n; i++) {
         scanf("%f", &x[i]);
-        printf("Enter the value of F[%d]: ", i + 1);
-        scanf("%f", &f[i]);
-        printf("\n");
-    
     }
-    //---------------MEAN----------------
-    
-    float sumf=0, sumfx=0, sumfd=0, mean;
-    int fx[n];
 
-    for (int i=0; i<n; i++){
-        fx[i]=x[i]*f[i];
+    printf("Enter the values of F: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &f[i]);
+    }
+    // Mean calculation
+    float sumfx = 0.0f, sumf = 0.0f;
+    for (int i = 0; i < n; i++) {
+        fx[i] = x[i] * f[i];
         sumfx += fx[i];
         sumf += f[i];
     }
-    printf("\n---------------- MEAN ----------------");
-    mean = sumfx/sumf;
-    printf("\nSum of Frequency is: %.2f",sumf);
-    printf("\nSum of fx is: %.2f",sumfx);
-    printf("\nDiscrete Mean is: %.2f",mean);
 
-     
-    // Sort the array in ascending order
-    int temp = 0;
+    float mean = sumfx / sumf;
+
+    // Sort the array in ascending order while keeping the frequency values aligned
+    float tempX;
+    int tempF;
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (x[j] > x[j + 1]) {
-                temp = x[j];
+                tempX = x[j];
                 x[j] = x[j + 1];
-                x[j + 1] = temp;
+                x[j + 1] = tempX;
 
-                temp = f[j];
+                tempF = f[j];
                 f[j] = f[j + 1];
-                f[j + 1] = temp;
+                f[j + 1] = tempF;
             }
         }
     }
-    // ---------------Median----------------
-    int medianposition, cf = 0, median;
-    medianposition = (sumf + 1) / 2;
-    
-    for (int i = 0; i < n; i++) {
-        cf += f[i];
-        if (cf >= medianposition) {
-            median = x[i];
-            break;
+    // Median calculation
+    cf[0] = f[0];
+    for (int i = 1; i < n; i++) {
+        cf[i] = cf[i - 1] + f[i];
+    }
+
+    float median;
+    int totalFrequency = (int)sumf;
+    if (totalFrequency % 2 == 0) {
+        int mid1 = totalFrequency / 2;
+        int mid2 = mid1 + 1;
+        for (int i = 0; i < n; i++) {
+            if (cf[i] >= mid1 && cf[i] < mid2) {
+                median = x[i];
+                break;
+            }
+        }
+    } else {
+        int mid = (totalFrequency + 1) / 2;
+        for (int i = 0; i < n; i++) {
+            if (cf[i] >= mid) {
+                median = x[i];
+                break;
+            }
         }
     }
-    printf("\n---------------- MEDIAN ----------------");
-    printf("\nCumulative Frequency: %d", cf);
-    printf("\nMedian:  %d", median);
-
-    // ---------------Mode----------------
-    int mode = x[0];
+    // Mode calculation
+    float mode = x[0];
     int maxf = f[0];
-
-    for(int i=0; i<n; i++){
-        if (maxf <= f[i]){
+    for (int i = 1; i < n; i++) {
+        if (f[i] > maxf) {
             maxf = f[i];
             mode = x[i];
-        }else if(maxf == f[i]){
+        } else if (f[i] == maxf) {
             printf("\nMode: Invalid Mode");
             return 0;
         }
     }
-    printf("---------------Mode----------------");
-    printf("\nMaxFrequency: %d",maxf);
-    printf("\nMode: %d",mode);
-    
 
-    // Table Format Output
-    printf("\n\n---------------- TABLE ----------------\n");
-    printf("X   | F   | FX ");
-    for (int i=0; i<n; i++){
-        printf("\n");
-        printf("%.1f",x[i]);
-        printf(" | ");
-        printf("%.1f",f[i]);
-        printf(" | ");
-        printf("%d",fx[i]);
+    printf("\n");
+    printf(" X     \t F    \t FX \t CF");
+    for (int i = 0; i < n; i++) {
+        printf("\n%.1f \t %d \t %.1f \t %d", x[i], f[i], fx[i], cf[i]);
     }
+    printf("\n-------------------------------");
+    printf("\nSum: \t%.1f \t %.1f", sumf, sumfx);
+
+    printf("\n\nMean: %.2f", mean);
+    printf("\nMedian: %.2f", median);
+    printf("\nMode: %.2f", mode);
     return 0;
 }

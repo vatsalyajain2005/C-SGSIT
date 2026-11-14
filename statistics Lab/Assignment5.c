@@ -8,18 +8,16 @@ int main() {
     int x[n],f[n],li[n],ui[n];
 
     // Continuous Direct Series Mean Calculation
+    printf("Enter Class Intervals (X):\n");     
     for (int i=0; i<n;i++){
-        printf("Enter the X%d first interval: ", i + 1);
         scanf("%d",&li[i]);
-        printf("Enter the X%d second interval: ", i + 1);
         scanf("%d",&ui[i]);
 
         avg = (li[i]+ui[i])/2;
         x[i] = avg;
     }
-    printf("\nEnter Frequency\n");
+    printf("Enter Frequency(F)\n");
     for (int i=0; i<=n-1;i++){
-        printf("Enter the value of F[%d]: ", i + 1);
         scanf("%d", &f[i]);
     }
 
@@ -44,9 +42,6 @@ int main() {
         sumfmean += fmeanMinus[i];//
     }
     MD = sumfmean/sumf;
-    
-    printf("\n---------------- MEAN ----------------");
-    printf("\nMeanDeviation: %.2f", MD);
 
     // ---------Median-----------
     
@@ -81,9 +76,6 @@ int main() {
     }
     MedianDeviation = sumfmedian/sumf;
 
-    printf("\n---------------- Median ----------------");
-    printf("\nMedian Deviation: %.2f", MedianDeviation);
-
     // ---------Mode-----------  
     int maxf = f[0], modeclass = 0; 
     float f1, f2, f0, l1, mode;
@@ -110,19 +102,24 @@ int main() {
         sumfmode += fmodeMinus[i];
     }
     modeDeviation = sumfmode/sumf;
-
-    printf("\n---------------- MODE ----------------");
-    printf("\nMode Deviation: %.2f", modeDeviation);
-
-
-    printf("\n\n---------------- TABLE ----------------\n");
+    
+    printf("\n");
     // Print the table header with line proper formatting
     printf("X\tF\tCF\t|X-Mean|\tF|X-Mean|\t|X-Median|\tF|X-Median|\t|X-Mode|\tF|X-Mode|\n");
     for (int i=0; i<n; i++) {
-        printf("%d | \t%d\t%d\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n", 
+        printf("%d \t%d\t%d\t%.2f\t\t%.2f\t\t%.2f\t\t%.2f\t\t%.2f\t\t%.2f\n", 
                x[i], f[i], cf[i], meanMinus[i], fmeanMinus[i], 
                medianMinus[i], fmedianMinus[i], modeMinus[i], fmodeMinus[i]);
     }
+    
+    printf("---------------------------------------------------------------------------------------------------------------------\n");
+    printf("Total F = %0.f\t\t\t\t%.2f\t\t\t\t%.2f\t\t\t\t%.2f\n", sumf, sumfmean, sumfmedian, sumfmode);
+    printf("\nMean: %.2f", mean);
+    printf("\tMedian: %.2f", median);
+    printf("\tMode: %.2f", mode);
+    printf("\nMeanDeviation: %.2f", MD);
+    printf("\nMedian Deviation: %.2f", MedianDeviation);
+    printf("\nMode Deviation: %.2f", modeDeviation);
 
     return 0;
 }   

@@ -1,107 +1,90 @@
-#include<stdio.h>
+#include <stdio.h>
+
 // Assignment 3 - Write a program to calculate mean, median, and mode in a Continuous series.
 int main() {
-    // Taking input for number of elements in the array
-    int n, avg, i; 
+    int n;
     printf("Enter the number of elements: ");
     scanf("%d", &n);
-    int x[n],f[n],li[n],ui[n];
 
-    // Continuous Direct Series Mean Calculation
-    for (int i=0; i<n;i++){
-        printf("Enter the X%d first interval: ", i + 1);
-        scanf("%d",&li[i]);
-        printf("Enter the X%d second interval: ", i + 1);
-        scanf("%d",&ui[i]);
+    float x[n], fx[n];
+    int f[n], li[n], ui[n], cf[n];
 
-        avg = (li[i]+ui[i])/2;
-        x[i] = avg;
+    printf("Enter Class Intervals (X):\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &li[i], &ui[i]);
+
+        if (li[i] > ui[i]) {
+            int temp = li[i];
+            li[i] = ui[i];
+            ui[i] = temp;
+        }
+
+        x[i] = (li[i] + ui[i]) / 2.0f;
     }
-    printf("\nEnter Frequency\n");
-    for (int i=0; i<=n-1;i++){
-        printf("Enter the value of F[%d]: ", i + 1);
+
+    printf("Enter Frequency (F):\n");
+    for (int i = 0; i < n; i++) {
         scanf("%d", &f[i]);
     }
 
     // ---------Mean------------
-
-    float sumf=0, sumfx=0;
-    int fx[n];
-    for (int i=0; i<=n-1;i++){
-         sumf += f[i];
-         fx[i] = x[i]*f[i];
-         sumfx += fx[i];
+    float sumf = 0.0f, sumfx = 0.0f;
+    for (int i = 0; i < n; i++) {
+        sumf += f[i];
+        fx[i] = x[i] * f[i];
+        sumfx += fx[i];
     }
-    float mean  = sumfx/sumf;
-
-    printf("\n---------------- MEAN ----------------");
-    printf("\nSum of Frequency is: %.2f",sumf);
-    printf("\nSum of fx is: %.2f",sumfx);
-    printf("\nMean is: %.2f",mean);
+    float mean = sumfx / sumf;
 
     // ---------Median-----------
-    
-    int cf[n];
     cf[0] = f[0];
-    int medianClass = 0;
-    float lowerlimit, fre, c,N;
-    for (int i=1; i<=n-1;i++){
-        cf[i] = cf[i -1] + f[i];
-        N = cf[i];
+    for (int i = 1; i < n; i++) {
+        cf[i] = cf[i - 1] + f[i];
     }
-    for (int i=0; i<=n-1;i++){
-        if ((N/2) <= cf[i] ){
+
+    int medianClass = 0;
+    float N = sumf;
+    for (int i = 0; i < n; i++) {
+        if ((N / 2.0f) <= cf[i]) {
             medianClass = i;
             break;
         }
-    }   
-    lowerlimit = li[medianClass];
-    fre = f[medianClass];
-    i = ui[medianClass] - li[medianClass];
-    c = cf[medianClass - 1];
+    }
 
-    float median = lowerlimit + ((N/2.0 - c)/fre)*i;
+    float lowerlimit = li[medianClass];
+    float fre = f[medianClass];
+    int classWidth = ui[medianClass] - li[medianClass];
+    float c = (medianClass > 0) ? cf[medianClass - 1] : 0.0f;
+    float median = lowerlimit + ((N / 2.0f - c) / fre) * classWidth;
 
-    printf("\n---------------- Median ----------------");
-    printf("\nMedian Class: %d-%d  Frequency: %.2f", li[medianClass], ui[medianClass],fre);
-    printf("\nPrevious CF: %.2f", c);
-    printf("\nMedian is: %.2f",median);
-
-    // ---------Mode-----------  
-    int maxf = f[0], modeclass = 0; 
-    float f1, f2, f0, l1, mode;
-    for (int i=0; i<=n-1;i++){
-       if (maxf < f[i]){
+    // ---------Mode-----------
+    int maxf = f[0], modeclass = 0;
+    for (int i = 1; i < n; i++) {
+        if (f[i] > maxf) {
             maxf = f[i];
             modeclass = i;
-       }
+        }
     }
-    l1 = li[modeclass];
-    f0 = f[modeclass - 1];
-    f1 = f[modeclass];
-    f2 = f[modeclass + 1];
-    int interval = ui[modeclass] - li[modeclass] ;
-    
-    mode = l1 + ((f1-f0)/(2*f1-f0-f2))*interval;
 
-    printf("\n---------------- MEAN ----------------");
-    printf("\nMode Class: %d-%d", li[modeclass], ui[modeclass]);
-    printf("\nF0: %.1f, F1: %.1f, F2: %.1f", f0,f1,f2);
-    printf("\nMode is: %.2f",mode);
-    
+    float f0 = (modeclass > 0) ? f[modeclass - 1] : 0.0f;
+    float f1 = f[modeclass];
+    float f2 = (modeclass < n - 1) ? f[modeclass + 1] : 0.0f;
+    float l1 = li[modeclass];
+    int interval = ui[modeclass] - li[modeclass];
+    float mode = l1 + ((f1 - f0) / (2 * f1 - f0 - f2)) * interval;
 
-    printf("\n\n---------------- TABLE ----------------\n");
-    printf("X     | F    | FX    |CF ");
-    for (int i=0; i<n; i++){
-        printf("\n");
-        printf("%d-%d",li[i],ui[i]);
-        printf("    ");
-        printf("%d",f[i]);
-        printf("    ");
-        printf("%d",fx[i]);
-        printf("    ");
-        printf("%d",cf[i]);
+    printf("\nClass \t\tX\tF\tFX\tCF\n");
+    printf("---------------------------------------------------------------\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d-%d\t\t%.1f\t%d\t%.1f\t%d\n",
+               li[i], ui[i], x[i], f[i], fx[i], cf[i]);
     }
+
+    printf("---------------------------------------------------------------\n");
+    printf("Total F = %.0f\tTotal FX = %.1f\n", sumf, sumfx);
+    printf("\nMean   = %.2f\n", mean);
+    printf("Median = %.2f\n", median);
+    printf("Mode   = %.2f\n", mode);
 
     return 0;
-}   
+}

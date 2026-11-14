@@ -7,14 +7,14 @@ int main() {
     scanf("%d", &n);
     float arr[n];
 
+    printf("Enter the values: ");
     for (i = 0; i < n; i++) {
-        printf("Enter the value of arr[%d]: ", i + 1);
         scanf("%f", &arr[i]);
         sum += arr[i];
     }
 
     mean = sum / n;
-    printf("The Mean of the array is: %f\n", mean);
+   
 
     // Sorting the array for median calculation
     for (i = 0; i < n - 1; i++) {
@@ -33,7 +33,7 @@ int main() {
     } else {
         median = arr[n / 2];
     }
-    printf("The Median of the array is: %f\n", median);
+   
 
     // Mode calculation
     int mode = arr[0], maxCount = 0, count;
@@ -50,8 +50,15 @@ int main() {
         }
     }
     
-    if (maxCount > 1) {
-        printf("The Mode of the array is: %d\n", mode);
+    // Table Formate 
+    printf("\n\tValue\n");
+    for (i = 0; i < n; i++) {
+        printf("\t%.2f\n", arr[i]);
+    }
+     printf("\nTMean: %.2f\n", mean);
+     printf("Median: %.2f\n", median);
+     if (maxCount > 1) {
+        printf("Mode: %d\n", mode);
     } else {
         printf("No mode found in the array.\n");
     }

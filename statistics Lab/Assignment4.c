@@ -1,41 +1,40 @@
-// Assignment 4 - Write a program to calculate geometric mean and hermonic mean for a Discrete series.
-# include<stdio.h>
-# include<math.h>
-int main(){
-    // Taking input for number of elements in the array
+// Assignment 4 - Calculate geometric mean and harmonic mean for a discrete series.
+#include <stdio.h>
+#include <math.h>
+
+int main() {
     int n;
-    printf("Enter the number of elements in the array: ");
-    scanf("%d",&n);
+    printf("Enter the number of values: ");
+    scanf("%d", &n);
 
-    float x[n],f[n];
-    // Value input for X and F
-    for (int i=0; i<=n-1; i++){
-        printf("Enter the value of X[%d]: ", i + 1);
+    float x[n], f[n], fxReciprocal[n], flogx[n];
+    float sumf = 0.0f, sumFReciprocal = 0.0f, sumFLogX = 0.0f;
+    printf("Enter Values (X):\n");
+    for (int i = 0; i < n; i++){
         scanf("%f", &x[i]);
-        printf("Enter the value of F[%d]: ", i + 1);
-        scanf("%f", &f[i]);
-        printf("\n");
-    
     }
-    // ---------HermonicMean------------
-    
-    float reci[n] ,sumdfx = 0 , HermonicMean, Divfx[n];
+    printf("Enter Frequency (F):\n");
     for (int i = 0; i < n; i++) {
-        Divfx[i] = f[i]/x[i];
-        sumdfx += Divfx[i];
-    } 
-    HermonicMean = n/sumdfx;
-    printf("\nHermonic Mean is: %.2f\n", HermonicMean);
+        scanf("%f",&f[i]);
 
-    // ---------GeometricMean------------
-    float logx[n], flogx[n], sumflogx = 0, ok, antilog, GeometricMean, sumf =0;
-    for (int i = 0; i < n; i++) {
-        logx[i] = log(x[i]);
-        flogx[i] = f[i]*logx[i];
-        sumflogx += flogx[i];
+        fxReciprocal[i] = f[i] / x[i];
+        flogx[i] = f[i] * log(x[i]);
         sumf += f[i];
-    } 
-    GeometricMean = exp(sumflogx / sumf);
-    printf("\nGeometric Mean: %.2f",GeometricMean);
+        sumFReciprocal += fxReciprocal[i];
+        sumFLogX += flogx[i];
+    }
+
+    printf("\nX\tF\tF/X\tlog(X)\tF*log(X)\n");
+    printf("---------------------------------------------\n");
+    for (int i = 0; i < n; i++) {
+        printf("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\n",
+               x[i], f[i], fxReciprocal[i], log(x[i]), flogx[i]);
+    }
+    printf("---------------------------------------------\n");
+    printf("Total\t%.2f\t%.2f\t\t%.2f\n", sumf, sumFReciprocal, sumFLogX);
+
+    printf("\nHarmonic Mean: %.2f", sumf / sumFReciprocal);
+    printf("\nGeometric Mean: %.2f\n", exp(sumFLogX / sumf));
+
     return 0;
 }
